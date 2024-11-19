@@ -1,0 +1,69 @@
+# Laravel
+
+# PHPUnit cache
+.phpunit.cache
+
+# Node.js (for Laravel)
+node_modules
+
+# Public files (Laravel)
+public/build
+public/hot
+public/storage
+
+# Storage files (Laravel)
+storage/*.key
+storage/pail
+
+# Vendor (Laravel)
+vendor
+
+# Environment files (Laravel)
+.env
+.env.backup
+.env.production
+
+# PHP specific files
+.phpactor.json
+.phpunit.result.cache
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Other logs and files
+auth.json
+npm-debug.log
+yarn-error.log
+
+# IDE specific files
+/.fleet
+/.idea
+/.vscode
+/.zed
+
+
+# React
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
