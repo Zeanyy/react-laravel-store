@@ -17,5 +17,5 @@ class ProductController extends Controller
         $products = Product::where('category_id', $category_id)->get();
         return response()->json($products);     
     }
-
+    
 }

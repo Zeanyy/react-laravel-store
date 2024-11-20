@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class CartItemController extends Controller
 {
-    public function index($cartId)
+    public function index($session_id)
     {
-        $cart = CartItem::where('cart_id', $cartId)->get();
+        $cart = CartItem::select('name', 'description', 'price', 'stock', 'image_url', 'quantity')
+        ->join('cart as c', 'cartItem.cart_id', '=', 'c.id')
+        ->join('product as p', 'cartItem.product_id', '=', 'p.id')
+        ->where('c.session_id', $session_id)
+        ->get();
         return response()->json($cart);
     }
 }

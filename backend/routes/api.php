@@ -16,4 +16,4 @@ Route::get('/products/{category_id}', [ProductController::class, 'getByCategory'
 
 use App\Http\Controllers\CartItemController;
 
-Route::get('/cart/{cart_id}', [CartItemController::class, 'index']);
+Route::get('/cart/{session_id}', [CartItemController::class, 'index']);
