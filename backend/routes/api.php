@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product_id}', [ProductController::class, 'getProduct']);
+Route::get('/products/category/{category_id}', [ProductController::class, 'getProductsByCategory']);
 
 
 use App\Http\Controllers\CartItemController;
