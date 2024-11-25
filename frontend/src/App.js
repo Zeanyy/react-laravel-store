@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import axios from 'axios';
 import Navbar from "./component/Navbar";
 import Cart from "./pages/CartPage";
 import Home from "./pages/HomePage";
 import Product from "./pages/ProductPage";
 import Products from "./pages/ProductsPage";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -21,17 +23,17 @@ function App() {
               index: true,
               element: <Products />,
               loader: async () => {
-                const response = await fetch("http://localhost:8000/api/products")
-                return response.json()
+                const response = await axios.get("http://localhost:8000/api/products")
+                return response.data
               }
             },
             {
               path: ":id",
               element: <Product />,
               loader: async ({ params }) => {
-                const { id } = params;
-                const response = await fetch(`http://localhost:8000/api/products/${id}`);
-                return response.json();
+                const { id } = params
+                const response = await axios.get(`http://localhost:8000/api/products/${id}`)
+                return response.data
               }
             },
           ],
