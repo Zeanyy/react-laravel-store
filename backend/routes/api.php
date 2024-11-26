@@ -17,4 +17,5 @@ Route::get('/products/category/{category_id}', [ProductController::class, 'getPr
 
 use App\Http\Controllers\CartItemController;
 
-Route::get('/cart/{session_id}', [CartItemController::class, 'index']);
+Route::get('/cart/session/{session_id}', [CartItemController::class, 'getCartBySession']);
+Route::get('/cart/user/{user_id}', [CartItemController::class, 'getCartByUser']);
