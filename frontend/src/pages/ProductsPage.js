@@ -1,14 +1,6 @@
 import { Link, useLoaderData } from "react-router-dom";
 import ProductImage from "../component/ProductImage";
-import Button from "../component/ActionButton";
-
-const handleBuyNow = (id) => {
-    alert(`kupiono ${id}`)
-}
-
-const handleAddToCart = (id) => {
-    alert(`dodano ${id} do koszyka`)
-}
+import Button from "../component/Button";
 
 function Products() {
     const products = useLoaderData()
@@ -23,8 +15,8 @@ function Products() {
                             <h1>{product.price} pln</h1>
                             <h2>{product.name}</h2>
                         </Link>
-                        <Button handleEvent={() => {handleAddToCart(product.id)}} text='Dodaj do koszyka'/>
-                        <Button handleEvent={() => {handleBuyNow(product.id)}} text='Kup teraz!'/>
+                        <Button handleEvent="addToCart" id={product.id} text='Dodaj do koszyka'/>
+                        <Button handleEvent="buyNow" id={product.id} text='Kup teraz!'/>
                     </div>
                 ))}
             </div>
