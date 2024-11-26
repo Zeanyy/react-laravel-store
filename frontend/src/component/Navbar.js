@@ -8,6 +8,7 @@ function Navbar() {
                     <li><Link to={"/"}>Home</Link></li>
                     <li><Link to={"/products"}>Products</Link></li>
                     <li><Link to={"/cart"}>Cart</Link></li>
+                    <li><Link to={"/signin"}>Logowanie</Link></li>
                 </ul>
             </nav>
             <Outlet/>
