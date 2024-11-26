@@ -8,6 +8,24 @@ import Products from "./pages/ProductsPage";
 import SignIn from "./pages/signInPage";
 import SignUp from "./pages/signUpPage";
 
+
+const productsLoader = async () => {
+    const response = await axios.get("http://localhost:8000/api/products")
+    return response.data
+}
+
+const productLoader = async ({ params }) => {
+    const { id } = params
+    const response = await axios.get(`http://localhost:8000/api/products/${id}`)
+    return response.data
+}
+
+const cartLoader = async () => {
+    const sessionId = localStorage.getItem('sessionId')
+    const response = await axios.get(`http://localhost:8000/api/cart/session/${sessionId}`)
+    return response.data
+}
+
 const router = createBrowserRouter([
 {
     element: <Navbar />,
@@ -22,25 +40,19 @@ const router = createBrowserRouter([
         {
             index: true,
             element: <Products />,
-            loader: async () => {
-            const response = await axios.get("http://localhost:8000/api/products")
-            return response.data
-            }
+            loader: productsLoader,
         },
         {
             path: ":id",
             element: <Product />,
-            loader: async ({ params }) => {
-            const { id } = params
-            const response = await axios.get(`http://localhost:8000/api/products/${id}`)
-            return response.data
-            }
+            loader: productLoader,
         },
         ],
     },
     {
         path: "/cart",
         element: <Cart />,
+        loader: cartLoader,
     },
     {
         path: "/signin",
