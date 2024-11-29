@@ -18,4 +18,12 @@ Route::get('/products/category/{category_id}', [ProductController::class, 'getPr
 use App\Http\Controllers\CartItemController;
 
 Route::get('/cart/session/{session_id}', [CartItemController::class, 'getCartBySession']);
-Route::get('/cart/user/{user_id}', [CartItemController::class, 'getCartByUser']);
+Route::middleware('auth:sanctum')->get('/cart/user', [CartItemController::class, 'getCartByUser']);
+
+
+use App\Http\Controllers\AuthController;
+
+Route::middleware('auth:sanctum')->get('/checkLogin', [AuthController::class, 'checkLogin']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/logout', [AuthController::class, 'logout']);
