@@ -17,8 +17,8 @@ function Product() {
                     {
                     (product.stock > 0) ? 
                     <div>
-                        <Button handleEvent="addToCart" id={product.id} text='Dodaj do koszyka'/>
-                        <Button handleEvent="buyNow" id={product.id} text='Kup teraz!'/>
+                        <Button handleEventName="addToCart" id={product.id}  text='Dodaj do koszyka'/>
+                        <Button handleEventName="buyNow" id={product.id} text='Kup teraz!'/>
                     </div> :
                     <div>
                         Out Of Stock

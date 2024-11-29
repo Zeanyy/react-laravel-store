@@ -27,3 +27,6 @@ Route::middleware('auth:sanctum')->get('/checkLogin', [AuthController::class, 'c
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::delete('/cart/{cartId}/item/{productId}/remove', [CartItemController::class, 'removeItem']);
+Route::put('/cart/{cartId}/item/{productId}/quantity/{newQuantity}', [CartItemController::class, 'changeQuantity']);

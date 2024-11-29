@@ -22,7 +22,6 @@ const productLoader = async ({ params }) => {
 }
 
 const cartLoader = async () => {
-    console.log(await checkLogin())
     if (await checkLogin()) {
         const token = localStorage.getItem('token')
         const response = await axios.get(`http://localhost:8000/api/cart/user`, {

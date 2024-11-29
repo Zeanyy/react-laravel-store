@@ -1,23 +1,23 @@
 const handleBuyNow = (id) => {
-    alert(`kupiono ${id}`);
-};
+    alert(`kupiono ${id}`)
+}
 
 const handleAddToCart = (id) => {
-    alert(`dodano ${id} do koszyka`);
-};
+    alert(`dodano ${id} do koszyka`)
+}
 
 const eventHandlers = {
     buyNow: handleBuyNow,
     addToCart: handleAddToCart,
-};
+}
 
-function Button({ handleEvent, id, text }) {
-
-    const eventHandler = eventHandlers[handleEvent];
+function Button({ handleEvent, handleEventName, id, text }) {
+    
+    const eventHandler = handleEvent || eventHandlers[handleEventName];
 
     return (
         <button onClick={() => eventHandler(id)}>{text}</button>
-    );
+    )
 }
 
-export default Button;
+export default Button

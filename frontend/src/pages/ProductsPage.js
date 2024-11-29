@@ -15,8 +15,8 @@ function Products() {
                             <h1>{product.price} pln</h1>
                             <h2>{product.name}</h2>
                         </Link>
-                        <Button handleEvent="addToCart" id={product.id} text='Dodaj do koszyka'/>
-                        <Button handleEvent="buyNow" id={product.id} text='Kup teraz!'/>
+                        <Button handleEventName="addToCart" id={product.id}  text='Dodaj do koszyka'/>
+                        <Button handleEventName="buyNow" id={product.id} text='Kup teraz!'/>
                     </div>
                 ))}
             </div>
