@@ -10,20 +10,20 @@ function Cart() {
 
     const handleRemoveItem = async (productId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/cart/${id}/item/${productId}/remove`)
+            await axios.delete(`http://localhost:8000/api/cart/${id}/remove/${productId}`)
             const updatedProducts = products.filter(product => product.id !== productId)
             setProducts(updatedProducts)
         } catch (error) {
             console.error('Error:', error.response.data.message)
         }
     }
-
+    
     const handleChangeQuantity = async (productId, quantity) => {
         if(quantity === 0) {
             handleRemoveItem(productId)
         } else {
             try {
-                await axios.put(`http://localhost:8000/api/cart/${id}/item/${productId}/quantity/${quantity}`)
+                await axios.put(`http://localhost:8000/api/cart/${id}/update/${productId}/${quantity}`)
                 const updatedProducts = products.map(product => 
                     product.id === productId 
                     ? { ...product, quantity: quantity }
