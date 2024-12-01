@@ -1,6 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
 import ProductImage from "../component/ProductImage";
-import Button from "../component/Button";
 
 function Products() {
     const products = useLoaderData()
@@ -13,7 +12,7 @@ function Products() {
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
               {products.map((product) => (
                 <Link to={`/products/${product.id}`} className="group">
-                  <ProductImage productImagePath={`${product.image_url}`}/>
+                  <ProductImage productImagePath={`${product.image_url}`} className="w-72 h-72 rounded-lg mr-6"/>
                   <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
                   <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
                 </Link>

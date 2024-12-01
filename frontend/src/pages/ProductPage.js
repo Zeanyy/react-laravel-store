@@ -14,7 +14,7 @@ function Product() {
                     <div className="w-full max-w-sm h-[400px] flex items-center justify-center bg-gray-100 rounded-lg">
                         <ProductImage
                             productImagePath={product.image_url}
-                            className="w-full h-full object-contain"
+                            className="w-96 h-96 object-contain"
                         />
                     </div>
                 </div>
@@ -22,7 +22,7 @@ function Product() {
                 {/* Informacje o produkcie */}
                 <div className="flex flex-col justify-between h-[400px]">
                     <div>
-                        <h3 className="text-sm text-gray-500">Travel / Bags</h3>
+                        <h3 className="text-sm text-gray-500">{product.category_name}</h3>
                         <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                         <div className="flex items-center mb-4">
                             <span className="text-2xl font-bold">{product.price} PLN</span>
@@ -45,15 +45,15 @@ function Product() {
                     {product.stock > 0 && (
                         <div className="mt-auto">
                             <div className="flex space-x-4">
-                                <Button handleEventName="addToCart" id={product.id}  text='Dodaj do koszyka' className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-500"/>
-                                <Button handleEventName="buyNow" id={product.id} text='Kup teraz!' className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-500"/>
+                                <Button handleEventName="addToCart" id={product.id} text='Dodaj do koszyka' className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-500" />
+                                <Button handleEventName="buyNow" id={product.id} text='Kup teraz!' className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-500" />
                             </div>
                         </div>
                     )}
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default Product;

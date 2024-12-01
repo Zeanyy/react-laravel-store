@@ -1,29 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 function SignUp() {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState('')
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    })
     const [errors, setErrors] = useState({})
     const { setIsAuthenticated } = useAuth()
 
     const navigate = useNavigate()
 
-    const handleOnChange = (event) => {
-        const { name, value } = event.target
-        if (name === "name") {
-            setName(value)
-        } else if (name === "email") {
-            setEmail(value)
-        } else if (name === "password") {
-            setPassword(value)
-        } else if (name === "password_confirmation") {
-            setPasswordConfirmation(value)
-        }
+    const handleOnChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        })
     }
 
     const handleSubmit = async (event) => {
@@ -34,16 +30,15 @@ function SignUp() {
                 withCredentials: true,
             })
 
-            const response = await axios.post('http://localhost:8000/api/register', {
-                name: name,
-                email: email,
-                password: password,
-                password_confirmation: passwordConfirmation,
+            const response = await axios.post('http://localhost:8000/api/register', formData)
+
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+                password_confirmation: "",
             })
 
-            setEmail('')
-            setPassword('')
-            setPasswordConfirmation('')
             setErrors({})
 
             localStorage.setItem('token', response.data.token)
@@ -61,53 +56,86 @@ function SignUp() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Nazwa</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={name}
-                        onChange={handleOnChange}
-                    />
-                    {errors.name && <div style={{ color: 'red' }}>{errors.name[0]}</div>}
-                </div>
-                <div>
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={handleOnChange}
-                    />
-                    {errors.email && <div style={{ color: 'red' }}>{errors.email[0]}</div>}
-                </div>
-                <div>
-                    <label htmlFor="password">Hasło</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={password}
-                        onChange={handleOnChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password_confirmation">Powtórz hasło</label>
-                    <input
-                        type="password"
-                        id="password_confirmation"
-                        name="password_confirmation"
-                        value={passwordConfirmation}
-                        onChange={handleOnChange}
-                    />
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                            Nazwa użytkownika
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={formData.name}
+                                onChange={handleOnChange}
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                            {errors.name && <div style={{ color: 'red' }}>{errors.name[0]}</div>}
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                            Adres e-mail
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="email"
+                                name="email"
+                                type="text"
+                                value={formData.email}
+                                onChange={handleOnChange}
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                            {errors.email && <div style={{ color: 'red' }}>{errors.email[0]}</div>}
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                            Hasło
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                value={formData.password}
+                                onChange={handleOnChange}
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                            Powtórz hasło
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                type="password"
+                                value={formData.password_confirmation}
+                                onChange={handleOnChange}
+                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                            />
+                        </div>
+                    </div>
                     {errors.password && <div style={{ color: 'red' }}>{errors.password[0]}</div>}
-                </div>
-                {errors.global && <div style={{ color: 'red' }}>{errors.global}</div>}
-                <button type="submit">Zarejestruj się</button>
-            </form>
+                    <div>
+                        <button
+                            type="submit"
+                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                            Zarejestruj się
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <p className="mt-10 text-center text-sm text-gray-500">
+                Masz już konto?
+                <Link to="/signin" className="font-semibold ml-1 text-indigo-600 hover:text-indigo-500">
+                    Zaloguj się
+                </Link>
+            </p>
         </>
     )
 }

@@ -10,19 +10,25 @@ const checkImageExists = async (imageUrl) => {
 }
 
 function ProductImage ({ productImagePath, className }) {
-    const [imagePath, setImagePath] = useState('/images/products/image-not-available.png');
+    const [imagePath, setImagePath] = useState('')
 
     useEffect(() => {
         const checkImage = async () => {
             const exists = await checkImageExists(productImagePath)
-            if(exists) setImagePath(productImagePath)
+            if (exists) {
+                setImagePath(productImagePath)
+            } else {
+                setImagePath('/images/products/image-not-available.png')
+            }
         }
-        checkImage()
+        checkImage();
     }, [productImagePath])
 
     return (
-        <img src={imagePath} className={className} alt="Product"/>
-    )
-}
+        <div>
+            <img src={imagePath} alt="Product" className={className}/>
+        </div>
+    );
+};
 
 export default ProductImage
