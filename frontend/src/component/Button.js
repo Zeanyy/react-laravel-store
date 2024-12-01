@@ -9,7 +9,7 @@ const handleAddToCart = async (id) => {
     const [type, session] = (token) ? ['user', null] : ['session', localStorage.getItem('sessionId')]
     let url = `http://localhost:8000/api/cart/add/${id}/${type}`;
     if (session) { url += `/${session}` }
-    const item = await axios.post(url, {}, {
+    await axios.post(url, {}, {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
@@ -21,12 +21,12 @@ const eventHandlers = {
     addToCart: handleAddToCart,
 }
 
-function Button({ handleEvent, handleEventName, id, text }) {
+function Button({ handleEvent, handleEventName, id, text, className }) {
     
     const eventHandler = handleEvent || eventHandlers[handleEventName];
 
     return (
-        <button onClick={() => eventHandler(id)}>{text}</button>
+        <button onClick={() => eventHandler(id)} className={className}>{text}</button>
     )
 }
 

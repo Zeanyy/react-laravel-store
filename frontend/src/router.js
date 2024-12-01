@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Navbar from "./component/Navbar";
 import Cart from "./pages/CartPage";
-import Home from "./pages/HomePage";
+//import Home from "./pages/HomePage";
 import Product from "./pages/ProductPage";
 import Products from "./pages/ProductsPage";
 import SignIn from "./pages/SignInPage";
@@ -66,16 +66,12 @@ const router = createBrowserRouter([
     children: [
     {
         path: "/",
-        element: <Home />,
+        element: <Products />,
+        loader: productsLoader,
     },
     {
         path: "/products",
         children: [
-        {
-            index: true,
-            element: <Products />,
-            loader: productsLoader,
-        },
         {
             path: "category/:id",
             element: <Products />,
