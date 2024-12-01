@@ -10,29 +10,29 @@ const SignOut = () => {
 
     useEffect(() => {
         const logOut = async () => {
-            setLoading(true)
-            const token = localStorage.getItem('token')
-
+            setLoading(true);
+            const token = localStorage.getItem('token');
+    
             try {
                 const response = await axios.get('http://localhost:8000/api/logout', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
-                })
-                console.log(response.data.message)
+                });
+                console.log(response.data.message);
             } catch (error) {
-                console.error('Error during logout', error)
+                console.error('Error during logout', error);
             } finally {
-                setLoading(false)
-                localStorage.removeItem('token')
-                setIsAuthenticated(false)
-                navigate('/')
+                setLoading(false);
+                localStorage.removeItem('token');
+                setIsAuthenticated(false);
+                navigate('/');
             }
-        }
-
-        logOut()
-
-    }, [navigate])
+        };
+    
+        logOut();
+    
+    }, [navigate, setIsAuthenticated]);
 
     return (
         <div>

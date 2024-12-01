@@ -15,6 +15,12 @@ const productsLoader = async () => {
     return response.data
 }
 
+const productsByCategoryLoader = async ({ params }) => {
+    const { id } = params
+    const response = await axios.get(`http://localhost:8000/api/products/category/${id}`)
+    return response.data
+}
+
 const productLoader = async ({ params }) => {
     const { id } = params
     const response = await axios.get(`http://localhost:8000/api/products/${id}`)
@@ -69,6 +75,11 @@ const router = createBrowserRouter([
             index: true,
             element: <Products />,
             loader: productsLoader,
+        },
+        {
+            path: "category/:id",
+            element: <Products />,
+            loader: productsByCategoryLoader,
         },
         {
             path: ":id",

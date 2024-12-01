@@ -43,7 +43,7 @@ function Cart() {
                         <div className="product" key={product.id}>
                             <Link to={`/products/${product.id}`}>
                                 <ProductImage productImagePath={product.image_url} />
-                                <h1>{product.price} pln</h1>
+                                <h1>{(Math.round(product.quantity * product.price*100) / 100).toFixed(2)} pln</h1>
                                 <h2>{product.name}</h2>
                             </Link>
                             <div>
