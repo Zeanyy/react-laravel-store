@@ -1,20 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import { useEffect } from "react";
+import { v4 } from 'uuid';
 
 function App() {
   
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/categories")
-    .then((response) => {
-      return response.json()
-    })
-    .then((result) => {
-      console.log(result)
-    })
-  })
-  
+    const id = localStorage.getItem('sessionId')
+    if(!id) {
+      const newSessionId = v4()
+      localStorage.setItem('sessionId', newSessionId)
+    }
+  }, [])
+
   return (
     <>
+      <RouterProvider router={router}/>
     </>
   );
 }

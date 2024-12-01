@@ -13,9 +13,14 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function getByCategory($category_id) {
+    public function getProduct($product_id) {
+        $product = Product::where('id', $product_id)->get();
+        return response()->json($product);     
+    }
+
+    public function getProductsByCategory($category_id) {
         $products = Product::where('category_id', $category_id)->get();
-        return response()->json($products);     
+        return response()->json($products);
     }
     
 }
