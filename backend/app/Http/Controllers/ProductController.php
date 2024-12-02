@@ -10,7 +10,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(8);
+
         return response()->json($products);
     }
 
@@ -24,7 +25,9 @@ class ProductController extends Controller
     }
 
     public function getProductsByCategory($category_id) {
-        $products = Product::where('category_id', $category_id)->get();
+        $products = Product::where('category_id', $category_id)
+            ->paginate(8);
+
         return response()->json($products);
     }
     

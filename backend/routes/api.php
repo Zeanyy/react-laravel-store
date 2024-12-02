@@ -20,6 +20,12 @@ use App\Http\Controllers\CartController;
 Route::get('/cart/session/{session_id}', [CartController::class, 'getCartBySession']);
 Route::middleware('auth:sanctum')->get('/cart/user', [CartController::class, 'getCartByUser']);
 
+Route::delete('/cart/{cartId}/remove/{productId}', [CartController::class, 'removeItem']);
+Route::put('/cart/{cartId}/update/{productId}/{newQuantity}', [CartController::class, 'changeQuantity']);
+
+Route::middleware('auth:sanctum')->post('/cart/add/{productId}/{type}/', [CartController::class, 'addItemAuth']);
+Route::post('/cart/add/{productId}/{type}/{id}', [CartController::class, 'addItemNoAuth']);
+
 
 use App\Http\Controllers\AuthController;
 
@@ -27,8 +33,3 @@ Route::middleware('auth:sanctum')->get('/checkLogin', [AuthController::class, 'c
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
-
-Route::delete('/cart/{cartId}/remove/{productId}', [CartController::class, 'removeItem']);
-Route::put('/cart/{cartId}/update/{productId}/{newQuantity}', [CartController::class, 'changeQuantity']);
-Route::middleware('auth:sanctum')->post('/cart/add/{productId}/{type}/', [CartController::class, 'addItemAuth']);
-Route::post('/cart/add/{productId}/{type}/{id}', [CartController::class, 'addItemNoAuth']);

@@ -10,14 +10,18 @@ import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
 import SignOut from "./pages/SignOutPage";
 
-const productsLoader = async () => {
-    const response = await axios.get("http://localhost:8000/api/products")
+const productsLoader = async ( {request} ) => {
+    const url = new URL(request.url);
+    const page = url.searchParams.get('page') || 1
+    const response = await axios.get(`http://localhost:8000/api/products?page=${page}`)
     return response.data
 }
 
-const productsByCategoryLoader = async ({ params }) => {
+const productsByCategoryLoader = async ({ params, request }) => {
     const { id } = params
-    const response = await axios.get(`http://localhost:8000/api/products/category/${id}`)
+    const url = new URL(request.url);
+    const page = url.searchParams.get('page') || 1
+    const response = await axios.get(`http://localhost:8000/api/products/category/${id}?page=${page}`)
     return response.data
 }
 
