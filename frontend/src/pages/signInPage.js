@@ -61,11 +61,12 @@ function SignIn() {
                             <input
                                 id="email"
                                 name="email"
-                                type="email"
+                                type="text"
                                 value={formData.email}
                                 onChange={handleOnChange}
                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                             />
+                            {errors.email && <div style={{ color: 'red' }}>{errors.email[0]}</div>}
                         </div>
                     </div>
                     <div>
@@ -81,7 +82,9 @@ function SignIn() {
                                 onChange={handleOnChange}
                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                             />
+                            {errors.password && <div style={{ color: 'red' }}>{errors.password[0]}</div>}
                         </div>
+                        {errors.global && <div style={{ color: 'red' }}>{errors.global}</div>}
                     </div>
                     <div>
                         <button

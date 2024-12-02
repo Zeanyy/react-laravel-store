@@ -91,36 +91,39 @@ function SignUp() {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                            Hasło
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={formData.password}
-                                onChange={handleOnChange}
-                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                            />
+                        <div>
+                            <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                                Hasło
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    value={formData.password}
+                                    onChange={handleOnChange}
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                            Powtórz hasło
-                        </label>
-                        <div className="mt-2">
-                            <input
-                                id="password_confirmation"
-                                name="password_confirmation"
-                                type="password"
-                                value={formData.password_confirmation}
-                                onChange={handleOnChange}
-                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                            />
+                        <div>
+                            <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                                Powtórz hasło
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="password_confirmation"
+                                    name="password_confirmation"
+                                    type="password"
+                                    value={formData.password_confirmation}
+                                    onChange={handleOnChange}
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                />
+                            </div>
                         </div>
+                        {errors.password && <div style={{ color: 'red' }}>{errors.password[0]}</div>}
                     </div>
-                    {errors.password && <div style={{ color: 'red' }}>{errors.password[0]}</div>}
+                    {errors.global && <div style={{ color: 'red' }}>{errors.global}</div>}
                     <div>
                         <button
                             type="submit"
