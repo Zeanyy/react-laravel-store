@@ -1,10 +1,18 @@
 import { useAuth } from '../context/AuthContext';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
 function Navbar() {
   const { isAuthenticated } = useAuth();
   const [dropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOnChange = (e) => {
+    var url = `${location.pathname}`
+    if(e.target.value !== "") url += `?name=${e.target.value}`
+    navigate(url)
+  }
 
   return (
     <>
@@ -23,7 +31,7 @@ function Navbar() {
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
               </svg>
             </div>
-            <input type="text" id="search-navbar" className="w-full rounded-lg border p-2 pl-10 text-sm text-gray-900 focus:border-blue-500" placeholder="Search..." />
+            <input onChange={handleOnChange} type="text" id="search-navbar" className="w-full rounded-lg border p-2 pl-10 text-sm text-gray-900 focus:border-blue-500" placeholder="Search..." />
           </div>
           {/* Other */}
           <div className="flex ml-auto">

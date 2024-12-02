@@ -13,7 +13,13 @@ import SignOut from "./pages/SignOutPage";
 const productsLoader = async ( {request} ) => {
     const url = new URL(request.url);
     const page = url.searchParams.get('page') || 1
-    const response = await axios.get(`http://localhost:8000/api/products?page=${page}`)
+    const name = url.searchParams.get('name')
+    const response = await axios.get(`http://localhost:8000/api/products`, {
+        params: {
+            page: page,
+            name: name,
+        },
+    }) 
     return response.data
 }
 
@@ -21,7 +27,11 @@ const productsByCategoryLoader = async ({ params, request }) => {
     const { id } = params
     const url = new URL(request.url);
     const page = url.searchParams.get('page') || 1
-    const response = await axios.get(`http://localhost:8000/api/products/category/${id}?page=${page}`)
+    const response = await axios.get(`http://localhost:8000/api/products/category/${id}`, {
+        params: {
+            page: page,
+        },
+    })
     return response.data
 }
 
