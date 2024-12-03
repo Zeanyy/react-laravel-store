@@ -32,3 +32,9 @@ Route::middleware('auth:sanctum')->get('/checkLogin', [AuthController::class, 'c
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+use App\Http\Controllers\OrderController;
+
+Route::middleware('auth:sanctum')->post('/order/user', [OrderController::class, 'index']);
+Route::post('/order/guest', [OrderController::class, 'index']);
+Route::post('/order/validate', [OrderController::class, 'validateForm']);

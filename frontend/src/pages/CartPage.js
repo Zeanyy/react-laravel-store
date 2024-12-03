@@ -5,14 +5,17 @@ import axios from "axios";
 import { useState } from "react";
 
 function Cart() {
-    const { id, data } = useLoaderData();
+    const { id, data, total_price } = useLoaderData();
     const [products, setProducts] = useState(data);
+    const [totalPrice, setTotalPrice] = useState(total_price);
 
     const handleRemoveItem = async (productId) => {
         try {
             await axios.delete(`http://localhost:8000/api/cart/${id}/remove/${productId}`);
             const updatedProducts = products.filter((product) => product.id !== productId);
             setProducts(updatedProducts);
+            var sum = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+            setTotalPrice(Math.round(sum * 100) / 100)
         } catch (error) {
             console.error("Error:", error.response.data.message);
         }
@@ -28,6 +31,8 @@ function Cart() {
                     product.id === productId ? { ...product, quantity: quantity } : product
                 );
                 setProducts(updatedProducts);
+                var sum = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+                setTotalPrice(Math.round(sum * 100) / 100)
             } catch (error) {
                 console.error("Error:", error.response.data.message);
             }
@@ -78,7 +83,7 @@ function Cart() {
                             <div className="space-y-4">
                                 <div className="flex justify-between">
                                     <span>Wartość koszyka</span>
-                                    <span>99,00 PLN</span>
+                                    <span>{totalPrice} PLN</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Koszt dostawy</span>
@@ -87,11 +92,13 @@ function Cart() {
                                 <hr />
                                 <div className="flex justify-between font-bold text-lg">
                                     <span>Łączna kwota</span>
-                                    <span>112,32 PLN</span>
+                                    <span>{(parseFloat(totalPrice) + 5).toFixed(2)} PLN</span>
                                 </div>
-                                <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-indigo-500">
-                                    Przejdź do płatności
-                                </button>
+                                <Link to="/order">
+                                    <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-indigo-500" >
+                                        Przejdź do dostawy
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

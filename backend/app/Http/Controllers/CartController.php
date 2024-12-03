@@ -25,7 +25,13 @@ class CartController extends Controller
             ->where("c.$type", $id)
             ->get();
         $cartId = $this->getCartId($id, $type);
-        return response()->json(['id' => $cartId, 'data'=>$data]);
+        
+        $totalPrice = CartItem::selectRaw('SUM(p.price * cartItem.quantity) as total_price')
+            ->join('product as p', 'cartItem.product_id', '=', 'p.id')
+            ->where('cartItem.cart_id', $cartId)
+            ->value('total_price');
+
+        return response()->json(['id' => $cartId, 'data'=>$data, 'total_price'=>$totalPrice]);
     }
 
     private function getCartId($id, $type) {

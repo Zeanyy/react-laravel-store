@@ -6,11 +6,12 @@ import Cart from "./pages/CartPage";
 //import Home from "./pages/HomePage";
 import Product from "./pages/ProductPage";
 import Products from "./pages/ProductsPage";
+import Order from "./pages/OrderPage";
 import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
 import SignOut from "./pages/SignOutPage";
 
-const productsLoader = async ( {request} ) => {
+const productsLoader = async ({ request }) => {
     const url = new URL(request.url);
     const page = url.searchParams.get('page') || 1
     const name = url.searchParams.get('name')
@@ -19,7 +20,7 @@ const productsLoader = async ( {request} ) => {
             page: page,
             name: name,
         },
-    }) 
+    })
     return response.data
 }
 
@@ -51,7 +52,7 @@ const cartLoader = async () => {
         })
         return response.data
     } else {
-        const sessionId = localStorage.getItem('sessionId') 
+        const sessionId = localStorage.getItem('sessionId')
         const response = await axios.get(`http://localhost:8000/api/cart/session/${sessionId}`)
         return response.data
     }
@@ -75,48 +76,53 @@ const checkLogin = async () => {
 }
 
 const router = createBrowserRouter([
-{
-    element: <Navbar />,
-    children: [
     {
-        path: "/",
-        element: <Products />,
-        loader: productsLoader,
-    },
-    {
-        path: "/products",
+        element: <Navbar />,
         children: [
-        {
-            path: "category/:id",
-            element: <Products />,
-            loader: productsByCategoryLoader,
-        },
-        {
-            path: ":id",
-            element: <Product />,
-            loader: productLoader,
-        },
-        ],
-    },
-    {
-        path: "/cart",
-        element: <Cart />,
-        loader: cartLoader,
-    },
-    {
-        path: "/signin",
-        element: <SignIn />,
-    },
-    {
-        path: "/signup",
-        element: <SignUp />,
-    },
-    {
-        path:"/signout",
-        element: <SignOut />
+            {
+                path: "/",
+                element: <Products />,
+                loader: productsLoader,
+            },
+            {
+                path: "/products",
+                children: [
+                    {
+                        path: "category/:id",
+                        element: <Products />,
+                        loader: productsByCategoryLoader,
+                    },
+                    {
+                        path: ":id",
+                        element: <Product />,
+                        loader: productLoader,
+                    },
+                ],
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
+                loader: cartLoader,
+            },
+            {
+                path: "/order",
+                element: <Order />,
+                loader: cartLoader,
+            },
+            {
+                path: "/signin",
+                element: <SignIn />,
+            },
+            {
+                path: "/signup",
+                element: <SignUp />,
+            },
+            {
+                path: "/signout",
+                element: <SignOut />
+            },
+        ]
     }
-    ]
-}
 ])
 
 export default router
