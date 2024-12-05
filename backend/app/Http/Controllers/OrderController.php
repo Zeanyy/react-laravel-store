@@ -18,7 +18,7 @@ class OrderController extends Controller
 
         try {
             $order = Order::create([
-                'user_id' => Auth::id(),
+                'user_id' => Auth::check() ? Auth::id() : null,
                 'order_date' => now(),
                 'total_price' => $request['total_price'],
             ]);

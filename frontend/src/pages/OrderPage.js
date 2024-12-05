@@ -42,11 +42,15 @@ function Order() {
             setErrors({})
 
             const token = localStorage.getItem('token')
-            await axios.post(`http://localhost:8000/api/order/user`, request, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            })
+            if (token) {
+                await axios.post(`http://localhost:8000/api/order/user`, request, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            } else {
+                await axios.post(`http://localhost:8000/api/order/guest`, request);
+            }
             setFormData({
                 fullName: "",
                 address: "",
