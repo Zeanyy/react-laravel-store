@@ -26,8 +26,11 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function getProductsByCategory($category_id) {
+    public function getProductsByCategory($category_id, Request $request) {
+        $name = $request->query('name');
+        
         $products = Product::where('category_id', $category_id)
+            ->where('product.name', 'like', '%' . $name . '%')
             ->paginate(8);
 
         return response()->json($products);
