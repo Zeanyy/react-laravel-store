@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import { useState } from "react";
 import { useAuth } from '../context/AuthContext';
+import { signIn } from "../services/AuthService";
 
 function SignIn() {
     const [formData, setFormData] = useState({
@@ -24,11 +24,7 @@ function SignIn() {
         event.preventDefault()
 
         try {
-            await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
-                withCredentials: true,
-            })
-
-            const response = await axios.post('http://localhost:8000/api/login', formData)
+            const response = await signIn(formData)
 
             setFormData({
                 email: "",
@@ -36,15 +32,15 @@ function SignIn() {
             })
             setErrors({})
 
-            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('token', response.token)
             setIsAuthenticated(true)
             navigate('/')
 
         } catch (error) {
-            if (error.response?.data?.errors) {
-                setErrors(error.response.data.errors)
+            if (error.errors) {
+                setErrors(error.errors)
             } else {
-                setErrors({ global: 'Spróbuj ponownie później.' })
+                setErrors({ global: error })
             }
         }
     }

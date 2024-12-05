@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import { useState } from "react";
+import { submitOrder, validateOrder } from "../services/OrderService";
 
 function Order() {
     const { data, total_price } = useLoaderData();
@@ -38,19 +38,12 @@ function Order() {
         }
 
         try {
-            await axios.post(`http://localhost:8000/api/order/validate`, formData)
+            await validateOrder(formData)
             setErrors({})
 
             const token = localStorage.getItem('token')
-            if (token) {
-                await axios.post(`http://localhost:8000/api/order/user`, request, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    }
-                })
-            } else {
-                await axios.post(`http://localhost:8000/api/order/guest`, request);
-            }
+            await submitOrder(request, token)
+
             setFormData({
                 fullName: "",
                 address: "",
@@ -65,10 +58,10 @@ function Order() {
             navigate('/')
 
         } catch (error) {
-            if (error.response?.data?.errors) {
-                setErrors(error.response.data.errors)
+            if (error.errors) {
+                setErrors(error.errors)
             } else {
-                setErrors({ global: 'Spróbuj ponownie później.' })
+                setErrors({ global: error })
             }
         }
     }

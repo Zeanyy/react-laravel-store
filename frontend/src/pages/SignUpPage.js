@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { signUp } from "../services/AuthService";
 
 function SignUp() {
     const [formData, setFormData] = useState({
@@ -24,32 +24,28 @@ function SignUp() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-
+    
         try {
-            await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
-                withCredentials: true,
-            })
-
-            const response = await axios.post('http://localhost:8000/api/register', formData)
-
+            const response = await signUp(formData)
+    
             setFormData({
                 name: "",
                 email: "",
                 password: "",
                 password_confirmation: "",
             })
-
+    
             setErrors({})
-
-            localStorage.setItem('token', response.data.token)
+    
+            localStorage.setItem('token', response.token)
             setIsAuthenticated(true)
             navigate('/')
-
+    
         } catch (error) {
-            if (error.response?.data?.errors) {
-                setErrors(error.response.data.errors)
+            if (error.errors) {
+                setErrors(error.errors)
             } else {
-                setErrors({ global: 'Spróbuj ponownie później.' })
+                setErrors({ global: error })
             }
         }
     }

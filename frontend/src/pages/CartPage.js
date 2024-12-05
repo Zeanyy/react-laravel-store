@@ -1,8 +1,8 @@
 import { Link, useLoaderData } from "react-router-dom";
 import Button from "../component/Button";
 import ProductImage from "../component/ProductImage";
-import axios from "axios";
 import { useState } from "react";
+import { removeItem, updateQuantity } from "../services/CartService";
 
 function Cart() {
     const { id, data, total_price } = useLoaderData();
@@ -11,33 +11,32 @@ function Cart() {
 
     const handleRemoveItem = async (productId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/cart/${id}/remove/${productId}`);
+            await removeItem(id, productId)
             const updatedProducts = products.filter((product) => product.id !== productId);
             setProducts(updatedProducts);
-            var sum = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+            var sum = updatedProducts.reduce((acc, product) => acc + (product.price * product.quantity), 0);
             setTotalPrice(Math.round(sum * 100) / 100)
         } catch (error) {
-            console.error("Error:", error.response.data.message);
+            console.error("Error:", error.message);
         }
-    };
-
+    }
     const handleChangeQuantity = async (productId, quantity) => {
         if (quantity <= 0) {
             handleRemoveItem(productId);
         } else {
             try {
-                await axios.put(`http://localhost:8000/api/cart/${id}/update/${productId}/${quantity}`);
+                await updateQuantity(id, productId, quantity)
                 const updatedProducts = products.map((product) =>
                     product.id === productId ? { ...product, quantity: quantity } : product
                 );
                 setProducts(updatedProducts);
-                var sum = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+                var sum = updatedProducts.reduce((acc, product) => acc + (product.price * product.quantity), 0);
                 setTotalPrice(Math.round(sum * 100) / 100)
             } catch (error) {
-                console.error("Error:", error.response.data.message);
+                console.error("Error:", error.message);
             }
         }
-    };
+    }
 
     return (
         <>
@@ -65,7 +64,7 @@ function Cart() {
                                         <h2 className="text-lg font-semibold">{product.name}</h2>
                                         <p className="text-sm text-gray-500">{product.description}</p>
                                         <p className="text-lg font-bold mt-2">
-                                            {(Math.round(product.price * product.quantity * 100) / 100).toFixed(2)} PLN
+                                            {product.price} PLN
                                         </p>
                                     </div>
                                     <div className="flex items-center">

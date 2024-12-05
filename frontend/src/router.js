@@ -1,9 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import axios from 'axios';
 
 import Navbar from "./component/Navbar";
 import Cart from "./pages/CartPage";
-//import Home from "./pages/HomePage";
 import Product from "./pages/ProductPage";
 import Products from "./pages/ProductsPage";
 import Order from "./pages/OrderPage";
@@ -11,71 +9,8 @@ import SignIn from "./pages/SignInPage";
 import SignUp from "./pages/SignUpPage";
 import SignOut from "./pages/SignOutPage";
 
-const productsLoader = async ({ request }) => {
-    const url = new URL(request.url);
-    const page = url.searchParams.get('page') || 1
-    const name = url.searchParams.get('name')
-    const response = await axios.get(`http://localhost:8000/api/products`, {
-        params: {
-            page: page,
-            name: name,
-        },
-    })
-    return response.data
-}
-
-const productsByCategoryLoader = async ({ params, request }) => {
-    const { id } = params
-    const url = new URL(request.url);
-    const page = url.searchParams.get('page') || 1
-    const name = url.searchParams.get('name')
-    const response = await axios.get(`http://localhost:8000/api/products/category/${id}`, {
-        params: {
-            page: page,
-            name: name,
-        },
-    })
-    return response.data
-}
-
-const productLoader = async ({ params }) => {
-    const { id } = params
-    const response = await axios.get(`http://localhost:8000/api/products/${id}`)
-    return response.data
-}
-
-const cartLoader = async () => {
-    if (await checkLogin()) {
-        const token = localStorage.getItem('token')
-        const response = await axios.get(`http://localhost:8000/api/cart/user`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        })
-        return response.data
-    } else {
-        const sessionId = localStorage.getItem('sessionId')
-        const response = await axios.get(`http://localhost:8000/api/cart/session/${sessionId}`)
-        return response.data
-    }
-}
-
-const checkLogin = async () => {
-    try {
-        const token = localStorage.getItem('token')
-        if (!token) {
-            return false
-        }
-        const response = await axios.get('http://localhost:8000/api/checkLogin', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            }
-        })
-        return response.status === 200
-    } catch (error) {
-        return false
-    }
-}
+import { productLoader, productsByCategoryLoader, productsLoader } from "./services/ProductServiece";
+import { cartLoader } from "./services/CartService";
 
 const router = createBrowserRouter([
     {
